@@ -1,0 +1,34 @@
+[
+  {
+    "prompt": "Please check the available stock for the customer's white Bulldog tee in size S.",
+    "tool": "stock_check",
+    "output": {
+      "sku": "CC-TEE-WHITE",
+      "name": "Classic Bulldog Tee",
+      "size": "S",
+      "qty": 0,
+      "location": "Aisle B"
+    }
+  },
+  {
+    "prompt": "Please look up the rent obligation for the lease attached to ticket 102.",
+    "tool": "rent_info",
+    "output": {
+      "id": 1,
+      "space_name": "Chapel Street shop",
+      "landlord": "Elm City Properties",
+      "monthly_rent": 2400.0,
+      "next_due": "2026-09-02",
+      "notes": null
+    }
+  },
+  {
+    "prompt": "Please look up the stored pricing for the navy hoodie requested on ticket 103.",
+    "tool": "price_check",
+    "output": {
+      "sku": "CC-HOOD-NAVY",
+      "unit_cost": 22.0,
+      "list_price": 58.0
+    }
+  }
+]

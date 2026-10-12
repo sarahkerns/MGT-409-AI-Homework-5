@@ -1,0 +1,47 @@
+[
+  {
+    "id": 101,
+    "final_status": "closed",
+    "short_outcome": "The size-S Classic Bulldog Tee was unavailable: 0 in Aisle B. The order could not be fulfilled and no cash was spent.",
+    "agent_contributions": {
+      "Boss": "Verified the ticket, delegated inventory and accounting checks, and closed it with detailed notes.",
+      "Inventory": "Verified CC-TEE-WHITE size S and found quantity 0 in Aisle B; did not deduct stock.",
+      "Accounting": "Verified invoice 501 was open for $840 and checked the $3,400 starting balance; made no payment.",
+      "Facilities": "Did not participate in this ticket run.",
+      "Customer Service": "Did not participate in this ticket run."
+    },
+    "mcp_tools_used": ["ticket_get", "stock_check", "invoice_get", "cash_check", "ticket_close"],
+    "human_approvals": [],
+    "cash_change": 0.0
+  },
+  {
+    "id": 102,
+    "final_status": "closed",
+    "short_outcome": "The rent notice was flagged high priority and the $2,400 lease payment was approved and logged; checking ended at $1,000.",
+    "agent_contributions": {
+      "Boss": "Verified the ticket, coordinated Facilities and Accounting, flagged high priority, prepared rent payment, and closed with detailed notes.",
+      "Inventory": "Did not participate in this ticket run.",
+      "Accounting": "Verified lease and cash readiness and prepared the guarded rent-payment step; did not self-approve payment.",
+      "Facilities": "Verified lease 1, Chapel Street shop, due date 2026-09-02, and desk date 2026-08-31.",
+      "Customer Service": "Did not participate in this ticket run."
+    },
+    "mcp_tools_used": ["ticket_get", "rent_info", "desk_date", "cash_check", "ticket_priority", "rent_pay", "ticket_close"],
+    "human_approvals": [{"approved_by": "Human operator", "kind": "lease", "ref_id": 1, "amount": 2400.0}],
+    "cash_change": -2400.0
+  },
+  {
+    "id": 103,
+    "final_status": "closed",
+    "short_outcome": "Only 8 of the requested 20 size-M navy hoodies were available; the pricing floor was $22, so no below-cost discount or purchase was made.",
+    "agent_contributions": {
+      "Boss": "Verified the ticket, delegated inventory and pricing review, rejected unsafe pricing, and closed with detailed notes.",
+      "Inventory": "Verified CC-HOOD-NAVY size M and found 8 available in Aisle A against a request for 20; did not deduct stock.",
+      "Accounting": "Applied the guarded bulk-price check: $0 was rejected below the $22 unit cost and $22 was confirmed as the floor; made no payment.",
+      "Facilities": "Did not participate in this ticket run.",
+      "Customer Service": "The customer-facing outcome was recorded by Boss; no external message was sent."
+    },
+    "mcp_tools_used": ["ticket_get", "stock_check", "bulk_price_check", "ticket_close"],
+    "human_approvals": [],
+    "cash_change": 0.0
+  }
+]

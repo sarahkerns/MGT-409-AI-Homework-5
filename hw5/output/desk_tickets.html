@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Customs Desk Tickets</title>
+  <style>
+    :root { color-scheme: light; font-family: Segoe UI, Arial, sans-serif; }
+    body { margin: 0; background: #f4f7fb; color: #172033; }
+    header { padding: 28px 34px 20px; background: #173b63; color: white; }
+    header h1 { margin: 0 0 6px; font-size: 28px; }
+    header p { margin: 0; opacity: .82; }
+    .tabs { display: flex; gap: 8px; padding: 16px 34px 0; background: white; border-bottom: 1px solid #d9e1ec; }
+    .tab { border: 1px solid #c8d3e2; border-bottom: 0; border-radius: 8px 8px 0 0; background: #eef3f8; padding: 11px 18px; cursor: pointer; font-weight: 600; color: #35506d; }
+    .tab.active { background: white; color: #173b63; border-top: 3px solid #2b78c5; padding-top: 9px; }
+    main { max-width: 980px; margin: 0 auto; padding: 28px 34px 48px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .ticket-label { color: #2b78c5; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h2 { margin: 5px 0 22px; font-size: 25px; }
+    .card { margin: 16px 0; padding: 18px 20px; background: white; border: 1px solid #d9e1ec; border-radius: 10px; box-shadow: 0 2px 7px #173b6312; }
+    .card h3 { margin: 0 0 10px; font-size: 17px; }
+    .card p { margin: 7px 0; line-height: 1.5; }
+    .card ul { margin: 8px 0 0; padding-left: 23px; line-height: 1.65; }
+    .actual { min-height: 110px; border: 2px dashed #c8d3e2; background: #fbfcfe; box-shadow: none; }
+    .actual h3 { color: #66788c; }
+    .screenshots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+    .screenshots figure { margin: 0; }
+    .screenshots img { display: block; width: 100%; border: 1px solid #d9e1ec; border-radius: 7px; }
+    .screenshots figcaption { margin-top: 6px; color: #66788c; font-size: 12px; font-weight: 600; }
+    .later { color: #66788c; font-style: italic; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Campus Customs Desk Plan</h1>
+    <p>Expected agent actions for the three open tickets</p>
+  </header>
+
+  <nav class="tabs" aria-label="Desk ticket tabs">
+    <button class="tab active" data-tab="ticket-101">Ticket 101</button>
+    <button class="tab" data-tab="ticket-102">Ticket 102</button>
+    <button class="tab" data-tab="ticket-103">Ticket 103</button>
+    <button class="tab" data-tab="cash">Cash</button>
+    <button class="tab" data-tab="reflection">Reflection</button>
+  </nav>
+
+  <main>
+    <section class="panel active" id="ticket-101">
+      <div class="ticket-label">Open ticket</div>
+      <h2>Ticket 101</h2>
+      <section class="card">
+        <h3>Expected</h3>
+        <p><strong>Who the boss should call first, and why:</strong> The Inventory Agent, because what needs to happen first is checking whether a size small Classic Bulldog Tee is in stock at the aisle location.</p>
+        <p><strong>Agent delegations:</strong> Inventory agent</p>
+        <p><strong>MCP tools used:</strong> <code>read_inventory</code>, <code>update_ticket_status</code></p>
+      </section>
+      <section class="card actual"><h3>Actual</h3><p><strong>Agents worked:</strong> Boss, Inventory, and Accounting.</p><p><strong>Delegations:</strong> Boss delegated to Inventory to verify the requested tee and to Accounting to verify invoice 501 and cash. Inventory reported 0 size-S tees in Aisle B; Accounting reported invoice 501 open for $840 and no payment.</p><p><strong>MCP tools used:</strong> <code>ticket_get</code>, <code>stock_check</code>, <code>invoice_get</code>, <code>cash_check</code>, <code>ticket_close</code>.</p><p><strong>Outcome:</strong> Closed unresolved for fulfillment because stock was unavailable; no cash changed.</p><div class="screenshots"><figure><img src="Testing Screenshots/101 Before.png" alt="Ticket 101 dashboard before the agent run"><figcaption>Before — Ticket 101</figcaption></figure><figure><img src="Testing Screenshots/101 After.png" alt="Ticket 101 dashboard after the agent run"><figcaption>After — Ticket 101</figcaption></figure></div></section>
+    </section>
+
+    <section class="panel" id="ticket-102">
+      <div class="ticket-label">Open ticket</div>
+      <h2>Ticket 102</h2>
+      <section class="card">
+        <h3>Expected</h3>
+        <p><strong>Who the boss should call first, and why:</strong> The Finance Agent because this is a rent payment due in 48 hours, which will require verifying that the amount of money is covered in the bank account for the rent disbursement.</p>
+        <p><strong>Agent delegations:</strong> Finance Agent</p>
+        <p><strong>MCP tools used:</strong> <code>read_leases</code>, <code>read_cash_accounts</code>, <code>execute_payment</code>, <code>update_ticket_status</code></p>
+      </section>
+      <section class="card actual"><h3>Actual</h3><p><strong>Agents worked:</strong> Boss, Facilities, and Accounting.</p><p><strong>Delegations:</strong> Boss delegated lease verification and priority work to Facilities and cash/payment readiness to Accounting. Facilities verified lease 1, the 2026-09-02 due date, and the 2026-08-31 desk date; Accounting verified $3,400 cash and payment readiness.</p><p><strong>MCP tools used:</strong> <code>ticket_get</code>, <code>rent_info</code>, <code>desk_date</code>, <code>cash_check</code>, <code>ticket_priority</code>, <code>rent_pay</code>, <code>ticket_close</code>.</p><p><strong>Human approval:</strong> Human operator approved the $2,400 rent payment through the approval route.</p><p><strong>Outcome:</strong> Closed high priority; checking changed from $3,400 to $1,000.</p><div class="screenshots"><figure><img src="Testing Screenshots/102 Before.png" alt="Ticket 102 dashboard before the agent run"><figcaption>Before — Ticket 102</figcaption></figure><figure><img src="Testing Screenshots/102 After.png" alt="Ticket 102 dashboard after the agent run"><figcaption>After — Ticket 102</figcaption></figure></div></section>
+    </section>
+
+    <section class="panel" id="ticket-103">
+      <div class="ticket-label">Open ticket</div>
+      <h2>Ticket 103</h2>
+      <section class="card">
+        <h3>Expected</h3>
+        <p><strong>Who the boss should call first, and why:</strong> The Sales Agent because the shop needs to confirm the discount can be used.</p>
+        <p><strong>Agent delegations:</strong> Pricing and Inventory Agents</p>
+        <p><strong>MCP tools used:</strong> <code>read_pricing</code>, <code>read_inventory</code>, <code>update_ticket_status</code></p>
+      </section>
+      <section class="card actual"><h3>Actual</h3><p><strong>Agents worked:</strong> Boss, Inventory, Accounting, and Customer Service context from the pricing decision.</p><p><strong>Delegations:</strong> Boss delegated inventory verification and pricing/accounting review. Inventory found 8 size-M hoodies in Aisle A against a request for 20. Accounting checked the ticket and the guarded bulk-price rule, rejecting $0 and confirming $22.00 as the floor at unit cost; Boss recorded the final decision.</p><p><strong>MCP tools used:</strong> <code>ticket_get</code>, <code>stock_check</code>, <code>bulk_price_check</code>, <code>ticket_close</code>.</p><p><strong>Outcome:</strong> Closed with no purchase and no cash movement; below-cost pricing was rejected.</p><div class="screenshots"><figure><img src="Testing Screenshots/103 Before.png" alt="Ticket 103 dashboard before the agent run"><figcaption>Before — Ticket 103</figcaption></figure><figure><img src="Testing Screenshots/103 After.png" alt="Ticket 103 dashboard after the agent run"><figcaption>After — Ticket 103</figcaption></figure></div></section>
+    </section>
+
+    <section class="panel" id="cash">
+      <div class="ticket-label">Later</div>
+      <h2>Cash</h2>
+      <section class="card"><h3>Actual cash reconciliation</h3><p><strong>Starting checking balance after reset:</strong> $3,400.00</p><ul><li><strong>Ticket 101:</strong> $0.00 change. The requested tee was out of stock; invoice 501 remained open and no purchase was made.</li><li><strong>Ticket 102:</strong> −$2,400.00. Human operator approved the lease 1 rent payment for the Chapel Street shop, due 2026-09-02.</li><li><strong>Ticket 103:</strong> $0.00 change. The requested 20 hoodies exceeded the 8 available and the below-cost discount was rejected; no purchase was made.</li></ul><p><strong>Ending checking balance:</strong> $1,000.00</p><p><strong>Math check:</strong> $3,400.00 − $2,400.00 = $1,000.00, matching <code>cash_accounts.balance</code> in the working database.</p></section>
+    </section>
+
+    <section class="panel" id="reflection">
+      <div class="ticket-label">Problem 10</div>
+      <h2>Reflection</h2>
+      <section class="card">
+        <h3>1. Agent performance</h3>
+        <ul>
+          <li><strong>Ticket 101:</strong> The agents did a good job because the requested size-S tee was out of stock, so they could not complete the request and provided a suggested next step. This matches the Ticket 101 Actual and Cash tabs: no purchase was made and cash did not change.</li>
+          <li><strong>Ticket 102:</strong> The agent did a good job denying the rent payment when the checking account did not have enough cash. However, the dashboard still offered a rent-approval button even though the payment would be blocked. The dashboard should gray out that approval or clearly say that the payment was automatically denied. The current presentation was somewhat misleading. This matters because the Cash tab shows that the completed run had a human-approved $2,400 payment and a balance change from $3,400 to $1,000; a fresh insufficient-cash run must not imply that approval can succeed.</li>
+          <li><strong>Ticket 103:</strong> The agents did a good job by not completing the request when there were only 8 hoodies available for an order of 20. They explained the inventory and below-cost pricing reasons and suggested next steps, with no cash movement recorded on the Cash tab.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>2. Actual compared with Expected</h3>
+        <ul>
+          <li><strong>Ticket 101 — Correct:</strong> The planned path called the Inventory Agent to check the tee before changing the ticket. The Actual tab confirms that inventory was checked and the request was closed unresolved when no size-S stock was available.</li>
+          <li><strong>Ticket 102 — Partially correct:</strong> The plan called the Accounting Agent, and the run also called Facilities. That was a good addition because Facilities verified the lease and due-date details, providing a safety check before Accounting handled payment readiness. The Cash tab records the resulting $2,400 rent payment and the correct $1,000 ending balance.</li>
+          <li><strong>Ticket 103 — Correct:</strong> The run talked to Accounting and Inventory, matching the need to check both the available hoodies and the allowed pricing floor. The Actual tab confirms that the shortage and below-cost discount were identified before any purchase or cash change.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>3. When one agent would be simpler</h3>
+        <p>Handling straightforward orders and rent notices would be simpler with a single agent. Tickets 101 and 102 follow direct, step-by-step paths—checking stock or checking and paying a bill—so splitting these basic tasks across multiple specialists can waste tokens and time when one agent with the appropriate database tools could finish the work in one pass.</p>
+      </section>
+      <section class="card">
+        <h3>4. New problems the agent team could solve</h3>
+        <ul>
+          <li>The Inventory Agent could spot when popular shirts or mugs run low and pass a reorder directly to the Accounting Agent to create an invoice.</li>
+          <li>The Customer Service and Inventory Agents could work together to confirm whether a student club's group discount is profitable and whether enough items are on the shelves to fill it, extending the checks used on Ticket 103.</li>
+          <li>The Accounting Agent could match incoming vendor invoices or monthly store rent against the calendar and prepare recurring payments from the checking account, subject to the required human approval.</li>
+        </ul>
+      </section>
+      <section class="card">
+        <h3>5. New problems the agent team could not solve</h3>
+        <ul>
+          <li>The team cannot accept damaged goods or issue refunds because the app lacks a database table for logging returned merchandise.</li>
+          <li>The agents cannot approve student designs for custom apparel because the app lacks an official trademark and color-compliance agent.</li>
+          <li>The system cannot build weekly work schedules for shop clerks because it lacks a staffing agent connected to employee availability and store-shift software.</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.tab, .panel').forEach(function (item) { item.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

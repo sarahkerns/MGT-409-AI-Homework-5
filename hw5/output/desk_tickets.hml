@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Customs Desk Tickets</title>
+  <style>
+    :root { color-scheme: light; font-family: Segoe UI, Arial, sans-serif; }
+    body { margin: 0; background: #f4f7fb; color: #172033; }
+    header { padding: 28px 34px 20px; background: #173b63; color: white; }
+    header h1 { margin: 0 0 6px; font-size: 28px; }
+    header p { margin: 0; opacity: .82; }
+    .tabs { display: flex; gap: 8px; padding: 16px 34px 0; background: white; border-bottom: 1px solid #d9e1ec; }
+    .tab { border: 1px solid #c8d3e2; border-bottom: 0; border-radius: 8px 8px 0 0; background: #eef3f8; padding: 11px 18px; cursor: pointer; font-weight: 600; color: #35506d; }
+    .tab.active { background: white; color: #173b63; border-top: 3px solid #2b78c5; padding-top: 9px; }
+    main { max-width: 980px; margin: 0 auto; padding: 28px 34px 48px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .ticket-label { color: #2b78c5; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h2 { margin: 5px 0 22px; font-size: 25px; }
+    .card { margin: 16px 0; padding: 18px 20px; background: white; border: 1px solid #d9e1ec; border-radius: 10px; box-shadow: 0 2px 7px #173b6312; }
+    .card h3 { margin: 0 0 10px; font-size: 17px; }
+    .card p { margin: 7px 0; line-height: 1.5; }
+    .card ul { margin: 8px 0 0; padding-left: 23px; line-height: 1.65; }
+    .actual { min-height: 110px; border: 2px dashed #c8d3e2; background: #fbfcfe; box-shadow: none; }
+    .actual h3 { color: #66788c; }
+    .later { color: #66788c; font-style: italic; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Campus Customs Desk Plan</h1>
+    <p>Expected agent actions for the three open tickets</p>
+  </header>
+
+  <nav class="tabs" aria-label="Desk ticket tabs">
+    <button class="tab active" data-tab="ticket-101">Ticket 101</button>
+    <button class="tab" data-tab="ticket-102">Ticket 102</button>
+    <button class="tab" data-tab="ticket-103">Ticket 103</button>
+    <button class="tab" data-tab="cash">Cash</button>
+    <button class="tab" data-tab="reflection">Reflection</button>
+  </nav>
+
+  <main>
+    <section class="panel active" id="ticket-101">
+      <div class="ticket-label">Open ticket</div>
+      <h2>Ticket 101</h2>
+      <section class="card">
+        <h3>Expected</h3>
+        <p><strong>Who the boss should call first, and why:</strong> The Inventory Agent, because what needs to happen first is checking whether a size small Classic Bulldog Tee is in stock at the aisle location.</p>
+        <p><strong>Agent delegations:</strong> Inventory agent</p>
+        <p><strong>MCP tools used:</strong> <code>read_inventory</code>, <code>update_ticket_status</code></p>
+      </section>
+      <section class="card actual"><h3>Actual</h3></section>
+    </section>
+
+    <section class="panel" id="ticket-102">
+      <div class="ticket-label">Open ticket</div>
+      <h2>Ticket 102</h2>
+      <section class="card">
+        <h3>Expected</h3>
+        <p><strong>Who the boss should call first, and why:</strong> The Finance Agent because this is a rent payment due in 48 hours, which will require verifying that the amount of money is covered in the bank account for the rent disbursement.</p>
+        <p><strong>Agent delegations:</strong> Finance Agent</p>
+        <p><strong>MCP tools used:</strong> <code>read_leases</code>, <code>read_cash_accounts</code>, <code>execute_payment</code>, <code>update_ticket_status</code></p>
+      </section>
+      <section class="card actual"><h3>Actual</h3></section>
+    </section>
+
+    <section class="panel" id="ticket-103">
+      <div class="ticket-label">Open ticket</div>
+      <h2>Ticket 103</h2>
+      <section class="card">
+        <h3>Expected</h3>
+        <p><strong>Who the boss should call first, and why:</strong> The Sales Agent because the shop needs to confirm the discount can be used.</p>
+        <p><strong>Agent delegations:</strong> Pricing and Inventory Agents</p>
+        <p><strong>MCP tools used:</strong> <code>read_pricing</code>, <code>read_inventory</code>, <code>update_ticket_status</code></p>
+      </section>
+      <section class="card actual"><h3>Actual</h3></section>
+    </section>
+
+    <section class="panel" id="cash">
+      <div class="ticket-label">Later</div>
+      <h2>Cash</h2>
+      <section class="card"><p class="later">To be completed later.</p></section>
+    </section>
+
+    <section class="panel" id="reflection">
+      <div class="ticket-label">Later</div>
+      <h2>Reflection</h2>
+      <section class="card"><p class="later">To be completed later.</p></section>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.tab, .panel').forEach(function (item) { item.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
