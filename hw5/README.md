@@ -2,6 +2,14 @@
 
 This project is the Campus Customs agent desk. It includes a FastMCP shop-data server, a FastAPI backend, a React/Vite dashboard, the two SQLite databases, testing evidence, and the Problem 10 reflection.
 
+## Dashboard
+
+After starting the backend and frontend, open the Reach Desk here:
+
+**http://localhost:5173**
+
+The dashboard calls the FastAPI backend at `http://localhost:8000`.
+
 ## Clean database and environment
 
 The original database is `data/campus_customs.db`. To start a clean working run, copy it over the working database:
